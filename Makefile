@@ -8,7 +8,7 @@ obj_files := $(patsubst %.c,%.o,$(src_files))
 .PHONY: all clean
 
 all: $(obj_files)
-	@echo "building $(prog) from $^"
+	@echo "building \"$(prog)\" program from $^"
 	$(CC) $(CFLAGS) -o $(prog) $^
 
 %.o: %.c
