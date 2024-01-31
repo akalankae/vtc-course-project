@@ -1,10 +1,13 @@
-/****************************************************************************************
+/*******************************************************************************
  * File name: main.c
  * Author: Akalanka Edirisinghe <akalankae@gmail.com>
  * Created on: 21 January 2024
- * Last modified: <date time>
- * Description: A program that a record shop might use to keep track of its inventory of CDs.
- ***************************************************************************************/
+ * Last modified: 31 Jan 24 07.29 PM
+ * Description: VTC Course Project
+ * A program that a record shop might use to keep track of its inventory of CDs.
+ * v0.1 - read title, artist name, number of tracks, album/single, price for one
+ * CD from user and print all of them back
+ ******************************************************************************/
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
