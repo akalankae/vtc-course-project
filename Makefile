@@ -3,16 +3,17 @@
 
 CC := gcc
 prog := cddb
-src_files := main.c database.c util.c
+src_files := main.c input.c output.c util.c
 obj_files := $(patsubst %.c,%.o,$(src_files))
+header := database.h
 
 .PHONY: all clean
 
-all: $(obj_files)
+$(prog): $(obj_files)
 	@echo "building \"$(prog)\" program from $^"
 	$(CC) $(CFLAGS) -o $(prog) $^
 
-$(obj_files): %.o: %.c
+$(obj_files): %.o: %.c $(header)
 	@echo "compiling $@ from $^"
 	$(CC) $(CFLAGS) -c -o $@  $^
 
