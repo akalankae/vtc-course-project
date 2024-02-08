@@ -1,8 +1,8 @@
 /****************************************************************************************
- * File name: database.c
+ * File name: input.c
  * Author: Akalanka Edirisinghe <akalankae@gmail.com>
  * Created on: 08 Feb 24
- * Last modified: 09 Feb 24 12.04 AM
+ * Last modified: 09 Feb 24 12.49 AM
  * Description: VTC course project functions.
  ***************************************************************************************/
 
@@ -12,11 +12,12 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "util.h"
-
-// yesno() function displays its string parameter, then reads one character from the
-// keyboard until that character is either Y or N.  Then the value 1 or 0 is returned,
-// depending on the read character.
+/*
+ * yesno()
+ * Display given string parameter, then read a single character from the keyboard.
+ * y/Y => return 1, n/N => return 0
+ * Keep prompting until valid input is given (i.e. y, n, Y, N).
+ */
 extern int yesno(const char prompt[])
 {
     char ans[16];
@@ -36,8 +37,10 @@ extern int yesno(const char prompt[])
     }
 }
 
-// enter() function takes a single string parameter, which it displays and then waits for
-// user to press ENTER on the keyboard.
+/*
+ * enter()
+ * Display given string parameter and wait for user to press ENTER on the keyboard.
+ */
 extern void enter(const char prompt[])
 {
     char ch;
@@ -47,30 +50,6 @@ extern void enter(const char prompt[])
     do {
         ch = getchar();
     } while (ch != '\n');
-}
-
-/*
- * print_cd()
- * Print details of a single CD to screen.
- */
-extern void print_cd(const cd_t cd)
-{
-    printf(
-        "\n**************************************************\n"
-        "     Title: %s\n"
-#ifndef NOARTIST
-        "     Artist: %s\n"
-#endif /* ifdef NOARTIST */
-
-        "     Number of tracks: %d\n"
-        "     %s\n"  // album/single
-        "     Retail price: $%.2f\n"
-        "**************************************************\n\n",
-        cd.title,
-#ifndef NOARTIST
-        cd.artist,
-#endif /* ifdef NOARTIST */
-        cd.num_tracks, cd.album ? "Album" : "Single", cd.price);
 }
 
 /*
@@ -100,4 +79,31 @@ extern cd_t read_cd(void)
     cd.price = read_float("Enter price of the CD: $");
 
     return cd;
+}
+
+// read_int() display given string parameter and read and return an integer
+extern int read_int(const char prompt[])
+{
+    int n;
+    fputs(prompt, stdout);
+    scanf("%d%*c", &n);
+    return n;
+}
+
+// read_float() display given string parameter and read and return a float
+extern float read_float(const char prompt[])
+{
+    float f;
+    fputs(prompt, stdout);
+    scanf("%f%*c", &f);
+    return f;
+}
+
+// read_string() display given string parameter and read string into given string
+// parameter
+extern void read_string(const char prompt[], char string[], size_t length)
+{
+    fputs(prompt, stdout);
+    fgets(string, length, stdin);
+    trim_nl(string, length);
 }
