@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stddef.h>
 
 /* Array size constants */
@@ -9,12 +10,21 @@
 #define ALBUM 'a'
 #define SINGLE 's'
 
-/* function prototypes */
+/* Data types */
+struct cd_type {
+    char title[TITLE_LEN];  // name of CD
+#ifndef NOARTIST
+    char artist[ARTIST_LEN];  // artists name
+#endif                        /* ifdef NOARTIST */
+    int num_tracks;           // number of tracks
+    bool album;               // true = ALBUM, false = SINGLE
+    float price;              // price in dollars
+};
+
+typedef struct cd_type cd_t;
+
+/* Function Prototypes */
 extern int yesno(const char prompt[]);
 extern void enter(const char prompt[]);
-
-#ifndef NOARTIST
-extern void output(char title[], char artist[], bool is_album, int ntracks, float price);
-#else
-extern void output(char title[], bool is_album, int ntracks, float price);
-#endif  // !NOARTIST
+extern cd_t read_cd(void);
+extern void print_cd(const cd_t cd);
