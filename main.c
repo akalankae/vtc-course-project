@@ -2,7 +2,7 @@
  * File name: main.c
  * Author: Akalanka Edirisinghe <akalankae@gmail.com>
  * Created on: 21 January 2024
- * Last modified: 09 Feb 24 12.49 AM
+ * Last modified: 09 Feb 24 01.25 AM
  * Description: VTC Course Project
  * A program that a record shop might use to keep track of its inventory of CDs.
  * v0.1 - read title, artist name, number of tracks, album/single, price for one CD from
@@ -14,6 +14,8 @@
 #include <stdlib.h>
 
 #include "database.h"
+
+#define MAX_CDS 100  // maximum number of CDs database can store
 
 int main(int argc, char *argv[])
 {
