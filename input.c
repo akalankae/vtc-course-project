@@ -2,15 +2,14 @@
  * File name: input.c
  * Author: Akalanka Edirisinghe <akalankae@gmail.com>
  * Created on: 08 Feb 24
- * Last modified: 09 Feb 24 12.49 AM
+ * Last modified: 09 Feb 24 01.27 AM
  * Description: VTC course project functions.
  ***************************************************************************************/
 
-#include "database.h"
-
 #include <ctype.h>
-#include <stdbool.h>
 #include <stdio.h>
+
+#include "database.h"
 
 /*
  * yesno()

@@ -10,7 +10,6 @@
  * v0.2 - modularize and abstract away with functions, conditional compilation to include
  * or exclude artist
  ***************************************************************************************/
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
