@@ -2,97 +2,77 @@
  * File name: main.c
  * Author: Akalanka Edirisinghe <akalankae@gmail.com>
  * Created on: 21 January 2024
- * Last modified: 07 Feb 24 02.03 AM
+ * Last modified: 08 Feb 24 07.00 PM
  * Description: VTC Course Project
  * A program that a record shop might use to keep track of its inventory of CDs.
  * v0.1 - read title, artist name, number of tracks, album/single, price for one CD from
  * user and print all of them back
+ * v0.2 - modularize and abstract away with functions, conditional compilation to include
+ * or exclude artist
  ***************************************************************************************/
-#include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "database.h"
 #include "util.h"
 
-#define MAX_CD 100
-#define MAX_TITLE 32
-#define MAX_ARTIST_NAME 64
 #define ALBUM 'a'
 #define SINGLE 's'
 
 int main(int argc, char *argv[])
 {
-    char titles[MAX_CD][MAX_TITLE];         // name of CD
-    char artists[MAX_CD][MAX_ARTIST_NAME];  // name of the artist
-    bool are_albums[MAX_CD];                // is it an ALBUM? or is it a SINGLE?
-    int ntracks[MAX_CD];                    // number of tracs
-    double prices[MAX_CD];                  // price in dollars
-    char cd_type;                           // 'a' for album, 's' for single
-    int num_cd;                             // index of current CD
+    char titles[MAX_CDS][TITLE_LEN];    // name of CD
+    char artists[MAX_CDS][ARTIST_LEN];  // artists name
+    bool cd_type[MAX_CDS];              // true = ALBUM, false = SINGLE
+    int ntracks[MAX_CDS];               // number of tracks
+    float prices[MAX_CDS];              // price in dollars
+    int num_cd;                         // index of current CD
 
     puts("CD Database Program");
-    printf("You can enter store %d CDs in the database\n", MAX_CD);
+    printf("You can enter store %d CDs in the database\n", MAX_CDS);
 
-    for (num_cd = 0; num_cd < MAX_CD; ++num_cd) {
+    for (num_cd = 0; num_cd < MAX_CDS; ++num_cd) {
         char reply;
 
         printf("Entering Data for CD #%02d\n", num_cd + 1);
         puts("=========================\n");
 
         // CD title
-        fputs("Enter name of the CD: ", stdout);
-        get_string(titles[num_cd], MAX_TITLE);
+        read_string("Enter name of the CD: ", titles[num_cd], sizeof titles[num_cd]);
+
+#ifndef NOARTIST
         // Artist name
-        fputs("Enter name of the artist: ", stdout);
-        get_string(artists[num_cd], MAX_ARTIST_NAME);
+        read_string("Enter name of the artist: ", artists[num_cd], sizeof titles[num_cd]);
+
+#endif /* ifdef NOARTIST */
+
         // Number of tracks
-        fputs("Enter number of tracks: ", stdout);
-        scanf("%d%*c", &ntracks[num_cd]);
+        ntracks[num_cd] = read_int("Enter number of tracks: ");
 
         // ALBUM or SINGLE?
-        do {
-            fputs(
-                "Is it an ALBUM or a SINGLE? ('a' for album or 's' for single)\n>> ",
-                stdout);
-            scanf("%c%*c", &cd_type);
-            cd_type = tolower(cd_type);
-
-            if (cd_type != ALBUM && cd_type != SINGLE)
-                fputs("Error: Please enter \"a\" or \"s\" only!\n", stderr);
-
-        } while (cd_type != ALBUM && cd_type != SINGLE);  // do-while
-
-        are_albums[num_cd] = (cd_type == ALBUM);
+        cd_type[num_cd] = yesno("Is it an Album? (y/n) ");
 
         // price
-        fputs("Enter price of the CD: $", stdout);
-        scanf("%lf%*c", &prices[num_cd]);
+        prices[num_cd] = read_float("Enter price of the CD: $");
 
         // Prompt for next CD
-        fputs("\nDo you wish to enter details for another CD? (y/N) ", stdout);
-        scanf("%c%*c", &reply);
-        reply = tolower(reply);
-
-        if (reply != 'y') break;
+        if (!yesno("\nDo you wish to enter details for another CD? (y/n) ")) break;
+        puts("");
     }
 
     printf("\nYou entered %u CDs\n", num_cd + 1);
 
     // Print CD info for all the CDs
     for (int j = 0; j <= num_cd; ++j) {
-        puts("\n**************************************************");
-        printf("     Title: %s\n", titles[j]);
-        printf("     Artist: %s\n", artists[j]);
-        printf("     Number of tracks: %d\n", ntracks[j]);
-        printf("     Type: %s\n", are_albums[j] ? "Album" : "Single");
-        printf("     Retail price: %.2lf\n", prices[j]);
-        puts("**************************************************\n");
+        output(
+            titles[j],
+#ifndef NOARTIST
+            artists[j],
+#endif /* ifdef NOARTIST */
+            cd_type[j], ntracks[j], prices[j]);
 
-        if (j < num_cd) {
-            fflush(stdin);
-            fputs("Press <Enter> to continue to next CD ", stdout);
-        }
+        if (j < num_cd) enter("Press <Enter> to continue to next CD ");
     }
 
     return (EXIT_SUCCESS);
