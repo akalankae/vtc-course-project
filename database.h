@@ -1,9 +1,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-/* Array size constants */
-#define TITLE_LEN 32   // maximum length of CD title
-#define ARTIST_LEN 64  // maximum length of artist name
 /* Data types */
 struct cd_type {
     char *title;  // name of CD
