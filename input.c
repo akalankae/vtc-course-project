@@ -2,7 +2,7 @@
  * File name: input.c
  * Author: Akalanka Edirisinghe <akalankae@gmail.com>
  * Created on: 08 Feb 24
- * Last modified: 09 Feb 24 01.27 AM
+ * Last modified: 09 Feb 24 11.58 AM
  * Description: VTC course project functions.
  ***************************************************************************************/
 
@@ -52,32 +52,28 @@ extern void enter(const char prompt[])
 }
 
 /*
- * read_cd()
- * Read in details of a single CD from keyboard
+ * read_cd(cd_t *)
+ * Read in details of a single CD from keyboard and write it to CD using CD ptr parameter
  */
-extern cd_t read_cd(void)
+extern void read_cd(cd_t *cd_ptr)
 {
-    cd_t cd;
-
     // CD title
-    read_string("Enter name of the CD: ", cd.title, sizeof cd.title);
+    read_string("Enter name of the CD: ", cd_ptr->title, sizeof cd_ptr->title);
 
 #ifndef NOARTIST
     // Artist name
-    read_string("Enter name of the artist: ", cd.artist, sizeof cd.artist);
+    read_string("Enter name of the artist: ", cd_ptr->artist, sizeof cd_ptr->artist);
 
 #endif /* ifdef NOARTIST */
 
     // Number of tracks
-    cd.num_tracks = read_int("Enter number of tracks: ");
+    cd_ptr->num_tracks = read_int("Enter number of tracks: ");
 
     // ALBUM or SINGLE?
-    cd.album = yesno("Is it an Album? (y/n) ");
+    cd_ptr->album = yesno("Is it an Album? (y/n) ");
 
     // price
-    cd.price = read_float("Enter price of the CD: $");
-
-    return cd;
+    cd_ptr->price = read_float("Enter price of the CD: $");
 }
 
 // read_int() display given string parameter and read and return an integer

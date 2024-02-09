@@ -2,13 +2,14 @@
  * File name: main.c
  * Author: Akalanka Edirisinghe <akalankae@gmail.com>
  * Created on: 21 January 2024
- * Last modified: 09 Feb 24 01.25 AM
+ * Last modified: 09 Feb 24 12.03 PM
  * Description: VTC Course Project
  * A program that a record shop might use to keep track of its inventory of CDs.
  * v0.1 - read title, artist name, number of tracks, album/single, price for one CD from
  * user and print all of them back
- * v0.2 - modularize and abstract away with functions, conditional compilation to include
- * or exclude artist
+ * v0.1.1 - modularize and abstract away with functions, conditional compilation to
+ * include or exclude artist
+ * v0.2 - use structures to encapsulate a CD
  ***************************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
         printf("Entering Data for CD #%02d\n", i + 1);
         puts("=========================\n");
 
-        cds[i] = read_cd();
+        read_cd(&cds[i]);
 
         // Prompt for next CD
         if (!yesno("\nDo you wish to enter details for another CD? (y/n) ")) break;
