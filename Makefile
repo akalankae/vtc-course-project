@@ -15,7 +15,7 @@ $(prog): $(obj_files)
 
 $(obj_files): %.o: %.c $(header)
 	@echo "compiling $@ from $^"
-	$(CC) $(CFLAGS) -c -o $@  $^
+	$(CC) $(CFLAGS) -c -o $@  $<
 
 clean:
 	rm -f $(obj_files)
