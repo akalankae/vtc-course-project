@@ -8,6 +8,8 @@
 
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "database.h"
 
@@ -59,12 +61,27 @@ extern void enter(const char prompt[])
  */
 extern void read_cd(cd_t *cd_ptr)
 {
+    char read_buf[BUF_SIZ];  // tmp buffer to read artist name and CD title into
+
     // CD title
-    read_string("Enter name of the CD: ", cd_ptr->title, sizeof cd_ptr->title);
+    // read_string("Enter name of the CD: ", cd_ptr->title, sizeof cd_ptr->title);
+    read_string("Enter name of the CD: ", read_buf, BUF_SIZ);
+    cd_ptr->title = strdup(read_buf);
+
+    if (cd_ptr->title == NULL) {
+        perror("strdup");
+        exit(1);
+    }
 
 #ifndef NOARTIST
     // Artist name
-    read_string("Enter name of the artist: ", cd_ptr->artist, sizeof cd_ptr->artist);
+    read_string("Enter name of the artist: ", read_buf, BUF_SIZ);
+    cd_ptr->artist = strdup(read_buf);
+
+    if (cd_ptr->artist == NULL) {
+        perror("strdup");
+        exit(1);
+    }
 
 #endif /* ifdef NOARTIST */
 
