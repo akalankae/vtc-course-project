@@ -2,7 +2,7 @@
  * File name: input.c
  * Author: Akalanka Edirisinghe <akalankae@gmail.com>
  * Created on: 08 Feb 24
- * Last modified: 09 Feb 24 11.58 AM
+ * Last modified: 09 Feb 24 03.58 PM
  * Description: VTC course project functions.
  ***************************************************************************************/
 
@@ -10,6 +10,8 @@
 #include <stdio.h>
 
 #include "database.h"
+
+#define BUF_SIZ 32  // max possible length of CD title and artist name
 
 /*
  * yesno()

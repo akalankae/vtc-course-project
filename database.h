@@ -18,11 +18,12 @@ struct cd_type {
 typedef struct cd_type cd_t;
 
 /* Function Prototypes */
-extern int yesno(const char prompt[]);
+extern int yesno(const char prompt[]);  // input.c
 extern void enter(const char prompt[]);
 extern int read_int(const char prompt[]);
 extern float read_float(const char prompt[]);
 extern void read_string(const char prompt[], char string[], size_t length);
 extern void read_cd(cd_t *cd_ptr);
-extern void print_cd(const cd_t *cd_ptr);
-extern void trim_nl(char s[], size_t len);  // utility functions
+extern void print_cd(const cd_t *cd_ptr);   // output.c
+extern void trim_nl(char s[], size_t len);  // util.c
+extern void clear_cd(cd_t *cd_ptr);
