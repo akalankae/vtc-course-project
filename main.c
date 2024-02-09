@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 
     // Print CD info for all the CDs
     for (int j = 0; j <= i; ++j) {
-        print_cd(cds[j]);
+        print_cd(&cds[j]);
 
         if (j < i) enter("Press <Enter> to continue to next CD ");
     }

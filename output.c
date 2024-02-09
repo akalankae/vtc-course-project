@@ -2,7 +2,7 @@
  * File name: output.c
  * Author: Akalanka Edirisinghe <akalankae@gmail.com>
  * Created on: 09 Feb 24
- * Last modified: 09 Feb 24 12.32 AM
+ * Last modified: 09 Feb 24 12.01 PM
  * Description: VTC Course project functions related to printing data
  ***************************************************************************************/
 #include <stdio.h>
@@ -10,10 +10,10 @@
 #include "database.h"
 
 /*
- * print_cd()
+ * print_cd(cd_ptr *)
  * Print details of a single CD to screen.
  */
-extern void print_cd(const cd_t cd)
+extern void print_cd(const cd_t *cd_ptr)
 {
     printf(
         "\n**************************************************\n"
@@ -26,9 +26,9 @@ extern void print_cd(const cd_t cd)
         "     %s\n"  // album/single
         "     Retail price: $%.2f\n"
         "**************************************************\n\n",
-        cd.title,
+        cd_ptr->title,
 #ifndef NOARTIST
-        cd.artist,
+        cd_ptr->artist,
 #endif /* ifdef NOARTIST */
-        cd.num_tracks, cd.album ? "Album" : "Single", cd.price);
+        cd_ptr->num_tracks, cd_ptr->album ? "Album" : "Single", cd_ptr->price);
 }
