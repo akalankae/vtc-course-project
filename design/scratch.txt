@@ -1,0 +1,96 @@
+#1. Create a new list
+
+Prompt for a name
+        ↓
+Get name for new list --> Check whether name exists -> NO ->  Create new list
+                                    ↓
+                                   YES
+                                    ↓
+                        Prompt for another name
+
+#2. Open existing list
+
+Display listing of existing lists
+        ↓
+Prompt for a name
+        ↓
+Get name for new list --> Check whether name exists -> YES ->  Open list
+                                        ↓
+                                        NO
+                                        ↓
+                        Display listing of existing lists
+                                        ↓
+                            Prompt for another name
+
+#3. Save the list ?
+
+#4. Save the list with a new name ?
+
+#5. Append the list to another file
+
+FROM SOLUTIONS TO EXERCISE
+- Display all 9 options each time
+- Display
+  a. Number of records in memory (i.e. CDs)
+  b. Current file name (or None)
+  each time before displaying options
+```
+ There are currently {} records in the system
+ No current filename | Current filename: {}
+
+  ```
+- Show what option user chose, wait him/her to press ENTER before moving on
+- If user choses to quit with unsaved records prompt to save to a file
+
+
+PROGRAM LOGIC and STRUCTURE
+all unsaved records will live in memory
+a var needs to keep track of all unsaved records
+a counter needs to track number of unsaved records
+- PRINT starting_message
+- WHILE user wants to continue
+    PRINT all options
+    IF quit selected exit the loop
+    ELSE run the relavent function
+
+
+
+
+FUNCTIONS
+
+create_list()
+- create a new file
+- if current file is not saved with save_list() ask to save before creating a new file
+- ask for a file name
+- if given name exists 
+  a. ask for a new name
+  b. ask to append to the file [ append_list() ]
+
+open_list()
+
+
+save_list()
+- save unsaved records in memory to currently opened file
+- if there is no such file ask for one
+- if there are no unsaved records this function should complain about it
+- for data integrity this should do one of 2 things
+    1. save list created by create_list() function
+    2. save same list created by open_list() function after some modifications
+- once function successfully completes number of unsaved records should be 0
+
+save_list_as()
+- like save_list() except the fact that this will save list to a new file
+- need user to give the name of under which list should be saved
+- if it is the same as currently open file --> complain
+
+append_list()
+
+
+create_record()
+- print how many records are currently in memory to save
+- print required prompts
+
+display_record()
+
+
+display_all_records()

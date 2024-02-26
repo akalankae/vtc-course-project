@@ -2,7 +2,7 @@
  * File name: input.c
  * Author: Akalanka Edirisinghe <akalankae@gmail.com>
  * Created on: 08 Feb 24
- * Last modified: 09 Feb 24 03.58 PM
+ * Last modified: 17 Feb 24 02.12 AM
  * Description: VTC course project functions.
  ***************************************************************************************/
 
@@ -95,7 +95,10 @@ extern void read_cd(cd_t *cd_ptr)
     cd_ptr->price = read_float("Enter price of the CD: $");
 }
 
-// read_int() display given string parameter and read and return an integer
+/*
+ * read_int()
+ * Display given string parameter and get an integer from stdin
+ */
 extern int read_int(const char prompt[])
 {
     int n;
@@ -104,7 +107,10 @@ extern int read_int(const char prompt[])
     return n;
 }
 
-// read_float() display given string parameter and read and return a float
+/*
+ * read_float()
+ * Display given string parameter and get a float from stdin
+ */
 extern float read_float(const char prompt[])
 {
     float f;
@@ -113,11 +119,52 @@ extern float read_float(const char prompt[])
     return f;
 }
 
-// read_string() display given string parameter and read string into given string
-// parameter
+/*
+ * read_string()
+ * Display given string parameter and read string of chars (including NEWLINE) into given
+ * char array
+ * NOTE: assumes given char array has enough space to hold all of the user entered chars
+ */
 extern void read_string(const char prompt[], char string[], size_t length)
 {
     fputs(prompt, stdout);
     fgets(string, length, stdin);
     trim_nl(string, length);
+}
+
+/*
+ * get_option()
+ * Display a list of user options and return one integer option.
+ */
+extern int get_opt(void)
+{
+    int opt;
+    bool valid_opt;
+    char menu[] =
+        "\nPlease choose ONE of the following options:\n"
+        "\n    File\n"
+        "    ====\n"
+        "  1. Create a new list\n"
+        "  2. Open an existing list\n"
+        "  3. Save the list\n"
+        "  4. Save the list with a new name\n"
+        "  5. Append the list to another file\n"
+        "\n    Edit\n"
+        "    ====\n"
+        "  6. Create a new record\n"
+        "\n    View\n"
+        "    ====\n"
+        "  7. Display a specific record\n"
+        "  8. Display all the records\n"
+        "\n  9. Exit\n"
+        "\nPlease enter your choice? ";
+
+    do {
+        opt = read_int(menu);
+        if (!(valid_opt = opt > 0 && opt < 10))
+            fprintf(stderr, "%d is not a valid option!\n", opt);
+
+    } while (!valid_opt);
+
+    return opt;
 }

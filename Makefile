@@ -2,23 +2,30 @@
 # A program that a record shop might use to track its inventory of CDs.
 
 CC := gcc
-prog := cddb
-src_files := main.c input.c output.c util.c
-obj_files := $(patsubst %.c,%.o,$(src_files))
-header := database.h
+bin := cddb
+src_dir := src
+src_files := $(wildcard $(src_dir)/*.c)
+obj_dir := obj
+obj_files := $(patsubst $(src_dir)/%.c,$(obj_dir)/%.o,$(src_files))
+header := $(src_dir)/database.h
 
 .PHONY: all clean
 
-$(prog): $(obj_files)
-	@echo "building \"$(prog)\" program from $^"
-	$(CC) $(CFLAGS) -o $(prog) $^
+$(bin): $(obj_files)
+	@printf "Building \"%s\" program from %s\n" $@ $^
+	$(CC) $(CFLAGS) -o $@ $^
 
-$(obj_files): %.o: %.c $(header)
-	@echo "compiling $@ from $^"
-	$(CC) $(CFLAGS) -c -o $@  $<
+$(obj_files): $(obj_dir)/%.o: $(obj_dir)
+
+$(obj_files): $(obj_dir)/%.o: $(src_dir)/%.c $(header)
+	@echo "compiling $@ from $<"
+	$(CC) -c $(CFLAGS) -o $@  $<
+
+$(obj_dir):
+	mkdir -p $@
 
 clean:
-	rm -f $(obj_files)
+	$(RM) $(obj_files)
 
 uninstall: clean
-	rm -f $(prog)
+	$(RM) $(prog)

@@ -1,0 +1,12 @@
+Chapter 16: Modifications to course project
+
+Main displays the following menu:
+1. File: Create a new list
+2.       Open an existing list
+3.       Save the list
+4.       Save the list with a new name
+5.       Append the list to another file
+6. Edit: Create a new record (what we already did)
+7. View: Display a specific record (what is the record you need? get a number)
+8.       Display all the records (show records one after another)
+9. Exit
